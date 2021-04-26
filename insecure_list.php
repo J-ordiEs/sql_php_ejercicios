@@ -39,7 +39,7 @@ $results = $statement->fetchAll();
 </div>
 </div>
  
-<div class="row column text-center">
+<div class="text-center row column">
 <h2>SQL Inyection</h2>
 <hr>
 </div>
