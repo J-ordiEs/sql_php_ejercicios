@@ -1,10 +1,11 @@
 <?php
 require_once('connection.php');
 
-$sql = '';
+$id = isset( $_GET['id'] ) ? $_GET['id'] : 0;
+$sql = 'UPDATE news SET status = 0 WHERE id = ?';
 
 $statement = $pdo->prepare($sql);
-$statement->execute();
+$statement->execute(array($id));
 $results = $statement->fetchAll();
 
-
+header('location: delete_logical.php');
