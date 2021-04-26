@@ -12,6 +12,13 @@ $show_form = FALSE;
 if($_POST)
 {
   //TODO:UPDATE ARTICLE
+  $sql_update_details = 'UPDATE news SET title = ?, content = ? WHERE id = ?';
+  $title = isset( $_POST['title']) ? $_POST['title'] : '';
+  $content = isset( $_POST['content']) ? $_POST['content'] : '';
+  $id = isset( $_GET['id']) ? $_GET['id'] : 0;
+  
+  $statement_update_details = $pdo->prepare($sql_update_details);
+  $statement_update_details->execute(array($title, $content, $id));
   header('Location: update.php');
 }
 
@@ -19,7 +26,18 @@ if(isset( $_GET['id'] ) )
 {
   //TODO: GET DETAILS
   $show_form = TRUE;
+  $sql_update = 'SELECT * FROM news WHERE id = ?';
+  $id = isset( $_GET['id']) ? $_GET['id'] : 0;
+  
+  $statement_update = $pdo->prepare($sql_update);
+  $statement_update->execute(array($id));
+  $result_details = $statement_update->fetchAll();
+  $rs_details = $result_details[0];
+  // echo "<pre>";
+  // var_dump($rs_details);
+  // echo "</pre>";
 }
+
 ?>
 
 <!doctype html>
@@ -40,7 +58,7 @@ if(isset( $_GET['id'] ) )
 </div>
 </div>
  
-<div class="row column text-center">
+<div class="text-center row column">
 <h2>UPDATE</h2>
 <hr>
 </div>
@@ -55,7 +73,7 @@ if( $show_form )
   <div class="row">
     <div class="medium-6 columns">
       <label>Ingrese el título
-        <input type="text" name="title" placeholder="ej. Javascript" value="">
+        <input type="text" name="title" placeholder="ej. Javascript" value="<?php echo $rs_details['title'] ?>">
         
       </label>
       <p class="help-text">El contenido deberá ser claro sobre su posible contenido</p>
@@ -68,7 +86,7 @@ if( $show_form )
   <div class="row">
     <div class="medium-12 columns">
       <label>Ingrese el Contenido
-        <textarea name="content" placeholder="ej. Lorem ipsum..."></textarea>
+        <textarea name="content" placeholder="ej. Lorem ipsum..."><?php echo $rs_details['content'] ?></textarea>
         <input class="button primary" type="submit" value="MODIFICAR" />
       </label>
       
@@ -96,7 +114,7 @@ if( $show_form )
       <td width="200"><?php echo $rs['title']; ?></td>
       <td><?php echo $rs['content']; ?></td>
       <td width="200">
-        <a class="primary button" href="#">Ver detalles</a>
+        <a class="primary button" href="update.php?id=<?php echo $rs['id']; ?>">Ver detalles</a>
       </td>
     </tr>
     <?php
