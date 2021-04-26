@@ -1,7 +1,11 @@
 <?php
 require_once('connection.php');
 
-$sql = 'SELECT user.*, status.* FROM user INNER JOIN status ON user.status_id = status.id INNER JOIN user_type ON user_type.id = user.user_type_id';
+$sql = '
+SELECT user.id as id_usuario, user.email as correo , status.name as nombre_estado, user_type.name as nombre_tipo 
+FROM user 
+INNER JOIN status ON user.status_id = status.id
+INNER JOIN user_type ON user_type.id = user.user_type_id';
 
 $statement = $pdo->prepare($sql);
 $statement->execute();
@@ -16,7 +20,7 @@ if($error[1])
   echo '</pre>';
 }
 
-$sql_log = 'SELECT * FROM user LEFT JOIN user_log ON user.id = user_log.user_id';
+$sql_log = 'SELECT * FROM user as u LEFT JOIN user_log as ul ON u.id = ul.user_id';
 
 $statement_log = $pdo->prepare($sql_log);
 $statement_log->execute();
@@ -49,7 +53,7 @@ if($error[1])
 </div>
 </div>
  
-<div class="row column text-center">
+<div class="text-center row column">
 <h2>Renombrando campos y tablas</h2>
 <hr>
 </div>
@@ -72,10 +76,10 @@ if($error[1])
   {
   ?>
     <tr>
-      <td><?php echo $rs['id']; ?></td>
-      <td><?php echo $rs['email']; ?></td>
-      <td><?php echo $rs['name']; ?></td>
-      <td><?php echo $rs['name']; ?></td>
+      <td><?php echo $rs['id_usuario']; ?></td>
+      <td><?php echo $rs['correo']; ?></td>
+      <td><?php echo $rs['nombre_estado']; ?></td>
+      <td><?php echo $rs['nombre_tipo']; ?></td>
     </tr>
   <?php } ?>
   </tbody>
