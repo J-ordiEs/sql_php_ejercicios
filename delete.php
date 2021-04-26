@@ -18,6 +18,16 @@ $results = $statement->fetchAll();
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>PHP & SQL</title>
 <link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+<script>
+  function delete_article(id_to_delete)
+  {
+    let confirmation =  confirm(' ¿Está seguro de que desea eliminar  el registro con el id ' + id_to_delete + ' ?');
+    
+    if (confirmation) {
+      window.location = "delete_action.php?id="+id_to_delete;
+    }
+  }
+</script>
 </head>
 <body>
  
@@ -29,7 +39,7 @@ $results = $statement->fetchAll();
 </div>
 </div>
  
-<div class="row column text-center">
+<div class="text-center row column">
 <h2>Borrado físico</h2>
 <hr>
 </div>
@@ -55,7 +65,7 @@ $results = $statement->fetchAll();
       <td><?php echo $rs['id']; ?></td>
       <td><?php echo $rs['title']; ?></td>
       <td><?php echo $rs['content']; ?></td>
-      <td><a class="small button alert" href="delete_action.php">ELIMINAR</a></td>
+      <td><a class="small button alert" onclick="delete_article(<?php echo $rs['id']; ?>)" href="#">ELIMINAR</a></td>
     </tr>
   <?php } ?>
   </tbody>
