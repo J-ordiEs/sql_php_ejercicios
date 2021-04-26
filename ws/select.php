@@ -1,6 +1,6 @@
 <?php
 require_once('../connection.php');
-$sql = '';
+$sql = 'SELECT  * FROM news ORDER BY id DESC';
 
 $statement = $pdo->prepare($sql);
 $statement->execute();
@@ -15,13 +15,18 @@ $results = $statement->fetchAll();
       </tr>
     </thead>
     <tbody>
+    <?php foreach ($results as $rs) {
+      
+    ?>
       <tr>
-        <td>ID</td>
-        <td>Título</td>
+        <td><?php echo $rs['id'] ?></td>
+        <td><?php echo $rs['title'] ?></td>
         <td>
-          <a class="hollow primary button" href="details" data-id="1" >Detalles</a>
-          <a class="hollow alert button" href="delete" data-id="1">Eliminar</a>
+          <a class="hollow primary button" href="details" data-id="<?php echo $rs['id'] ?>" >Detalles</a>
+          <a class="hollow alert button" href="delete" data-id="<?php echo $rs['id'] ?>">Eliminar</a>
         </td>
       </tr>
+      <?php
+    }?>
     </tbody>
   </table>

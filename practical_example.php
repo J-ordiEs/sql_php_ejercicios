@@ -1,10 +1,6 @@
 <?php
 require_once('connection.php');
 
-
-
-
-
 $sql = 'SELECT * FROM news WHERE 1 ORDER BY id DESC';
 
 $statement = $pdo->prepare($sql);
@@ -33,7 +29,7 @@ $results = $statement->fetchAll();
 
 </div>
  
-<div class="row column text-center">
+<div class="text-center row column">
 <h2>INSERT</h2>
 <hr>
 </div>
